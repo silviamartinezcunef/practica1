@@ -28,6 +28,7 @@ from filtering.practica1_filtering import Practica1Filtering
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
     accuracy_score, precision_score, recall_score,
     precision_recall_curve, auc, confusion_matrix
@@ -73,32 +74,60 @@ print(f"[OK] Train: {X_train_filt.shape}, Test: {X_test_filt.shape}")
 # Entrenar modelos
 print("\n[5/9] Entrenando Gradient Boosting...")
 model_gb = GradientBoostingClassifier(
-    n_estimators=100, learning_rate=0.1, max_depth=5,
-    subsample=0.8, random_state=RANDOM_STATE, verbose=1
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=5,
+    subsample=0.8,
+    min_samples_split=100,
+    min_samples_leaf=50,
+    random_state=RANDOM_STATE,
+    verbose=0
 )
 model_gb.fit(X_train_filt, y_train)
 print("[OK] Gradient Boosting entrenado")
 
 print("\n[6/9] Entrenando SVM...")
-print("   Nota: Usando muestra de 20,000 registros para acelerar (SVM es lento con datos grandes)")
-# Reducir dataset para SVM (muestra aleatoria de 20,000)
-sample_size = min(20000, len(X_train_filt))
-sample_indices = np.random.choice(X_train_filt.index, size=sample_size, replace=False)
-X_train_svm = X_train_filt.loc[sample_indices]
-y_train_svm = y_train.loc[sample_indices]
+print("   Nota: Usando muestra de 10,000 registros para acelerar (SVM es lento con datos grandes)")
+# Reducir dataset para SVM con estratificacion para mantener balance de clases
+sample_size = min(10000, len(X_train_filt))
+if sample_size < len(X_train_filt):
+    X_train_svm, _, y_train_svm, _ = train_test_split(
+        X_train_filt, y_train,
+        train_size=sample_size,
+        stratify=y_train,
+        random_state=RANDOM_STATE
+    )
+else:
+    X_train_svm = X_train_filt
+    y_train_svm = y_train
 
 model_svm = SVC(
-    kernel='rbf', C=1.0, gamma='scale', class_weight='balanced',
-    probability=True, max_iter=1000, random_state=RANDOM_STATE, verbose=True
+    kernel='rbf',
+    C=10.0,  # Mayor C para datos complejos
+    gamma='scale',
+    class_weight='balanced',
+    probability=True,
+    max_iter=1000,
+    random_state=RANDOM_STATE,
+    verbose=False
 )
 model_svm.fit(X_train_svm, y_train_svm)
 print("[OK] SVM entrenado")
 
 print("\n[7/9] Entrenando Red Neuronal...")
 model_mlp = MLPClassifier(
-    hidden_layer_sizes=(100, 50), activation='relu', solver='adam',
-    learning_rate='adaptive', max_iter=300, early_stopping=True,
-    validation_fraction=0.1, random_state=RANDOM_STATE, verbose=True
+    hidden_layer_sizes=(100, 50),
+    activation='relu',
+    solver='adam',
+    alpha=0.001,  # Regularizacion
+    learning_rate='adaptive',
+    learning_rate_init=0.001,
+    max_iter=500,
+    early_stopping=True,
+    validation_fraction=0.15,
+    n_iter_no_change=20,
+    random_state=RANDOM_STATE,
+    verbose=False
 )
 model_mlp.fit(X_train_filt, y_train)
 print(f"[OK] MLP entrenado (convergio en {model_mlp.n_iter_} iteraciones)")

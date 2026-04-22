@@ -33,5 +33,7 @@ Thumbs.db
 *.h5
 *.joblib
 
-# Logs
+# Logs y archivos temporales
 *.log
+*_ejecucion.txt
+resultados_completos.txt

@@ -174,8 +174,8 @@ Este modelo simple establece la línea base que debemos superar.
 
 ### 1. Clonar el repositorio
 ```bash
-git clone [URL_DEL_REPOSITORIO]
-cd practica_1
+git clone https://github.com/silviamartinezcunef/practica1.git
+cd practica1
 ```
 
 ### 2. Instalar dependencias
@@ -292,8 +292,8 @@ pip install sentence-transformers
 ## 📧 Contacto
 
 Para dudas o comentarios:
-- Email: [tu_email@cunef.edu]
-- GitHub Issues: [URL del repositorio]
+- Email: [silvia.martinez@cunef.edu]
+- GitHub Issues: [https://github.com/silviamartinezcunef/practica1]
 
 ## 📄 Licencia
 

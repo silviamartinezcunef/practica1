@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.ipynb_checkpoints
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook (NO ignorar - necesitamos el ejecutado)
+# .ipynb_checkpoints
+*.ipynb_checkpoints
+
+# Data (opcional - en tu caso SÍ incluir)
+# data/*.csv
+
+# Modelos grandes
+*.pkl
+*.h5
+*.joblib
+
+# Logs
+*.log

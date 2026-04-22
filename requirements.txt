@@ -1,0 +1,31 @@
+# Práctica 1 - Pipeline ML Detección de Impago
+# Dependencias del proyecto
+
+# Core scientific libraries
+numpy>=1.23.0
+pandas>=1.5.0
+scipy>=1.9.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+feature-engine>=1.6.0
+
+# Text encoding
+sentence-transformers>=2.2.0
+transformers>=4.30.0
+torch>=2.0.0
+
+# Data manipulation
+openpyxl>=3.1.0  # Para leer archivos Excel
+
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.12.0
+
+# Jupyter
+jupyter>=1.0.0
+notebook>=6.5.0
+ipykernel>=6.20.0
+
+# Utilities
+tqdm>=4.65.0  # Progress bars

@@ -22,21 +22,22 @@ Desarrollar un pipeline alternativo completo que:
 ```
 practica_1/
 ├── data/
-│   ├── df_train_small.csv              # Datos de entrenamiento
-│   ├── df_test_small.csv               # Datos de test
-│   ├── variables_withExperts.xlsx      # Configuración de variables (CON expertos)
-│   └── variables_withoutExperts.xlsx   # Configuración de variables (SIN expertos)
+│   ├── df_train_small.csv              # Datos de entrenamiento (80,000 filas)
+│   ├── df_test_small.csv               # Datos de test (20,000 filas)
+│   ├── variables_withExperts.xlsx      # Configuración de variables con expertos
+│   ├── variables_withoutExperts.xlsx   # Configuración de variables sin expertos (referencia)
+│   ├── base_preprocessing.py           # Clase base de referencia
+│   └── base_filtering.py               # Clase base de referencia
 ├── src/
 │   ├── preprocessing/
 │   │   ├── __init__.py
-│   │   ├── base_preprocessing.py       # Clase base (referencia)
-│   │   └── practica1_preprocessing.py  # ⭐ Clase de preprocesamiento (NUEVA)
+│   │   └── practica1_preprocessing.py  # Clase de preprocesamiento (alternativa)
 │   └── filtering/
 │       ├── __init__.py
-│       ├── base_filtering.py           # Clase base (referencia)
-│       └── practica1_filtering.py      # ⭐ Clase de filtrado (NUEVA)
-├── practica1_notebook.ipynb            # ⭐ Notebook principal (NUEVO)
-├── requirements.txt                    # Dependencias
+│       └── practica1_filtering.py      # Clase de filtrado (alternativa)
+├── practica1_notebook.ipynb            # Notebook principal ejecutado
+├── ejecutar_practica.py                # Script ejecutable sin Jupyter
+├── requirements.txt                    # Dependencias del proyecto
 └── README.md                           # Este archivo
 ```
 
@@ -67,7 +68,7 @@ Las principales librerías utilizadas:
 
 #### Diferencias respecto a la clase base:
 
-| Aspecto | Clase Base | **Practica1Preprocess** (NUEVA) |
+| Aspecto | BasePreprocess (referencia) | **Practica1Preprocess** (implementación) |
 |---------|-----------|--------------------------------|
 | **Variables** | `variables_withoutExperts.xlsx` | **`variables_withExperts.xlsx`** (incluye grade, FICO, int_rate) |
 | **Imputación nulos** | Mediana/moda simple | **KNNImputer** (considera vecinos cercanos) |
@@ -211,6 +212,10 @@ El notebook **ya está ejecutado** con las salidas visibles. Puedes:
 
 ## 📝 Decisiones de Diseño
 
+### Comparación con BasePreprocess
+
+La clase `BasePreprocess` (disponible en `data/base_preprocessing.py`) utiliza técnicas estándar, mientras que `Practica1Preprocess` implementa alternativas justificadas para mejorar el rendimiento.
+
 ### ¿Por qué KNNImputer?
 - Considera similitud entre muestras
 - Más sofisticado que mediana/moda simple
@@ -264,8 +269,8 @@ El notebook **ya está ejecutado** con las salidas visibles. Puedes:
 
 - [scikit-learn Documentation](https://scikit-learn.org/)
 - [feature-engine Documentation](https://feature-engine.readthedocs.io/)
-- Material de clase: notebooks 03 y 04
-- Clases base: `BasePreprocess`, `BaseFiltering`
+- Clases de referencia: `data/base_preprocessing.py`, `data/base_filtering.py`
+- Enunciado: Práctica 1 - Modelización en Ingeniería de Datos, CUNEF
 
 ## 🐛 Troubleshooting
 
